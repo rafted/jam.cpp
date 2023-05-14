@@ -1,10 +1,11 @@
 #include <entt/entt.hpp>
 #include <spdlog/spdlog.h>
 
-int main() {
-  spdlog::info("Starting Jam");
+int main()
+{
+    spdlog::info("Starting Jam");
 
-  entt::registry registry;
+    entt::registry registry;
 
-  return 0;
+    return 0;
 }

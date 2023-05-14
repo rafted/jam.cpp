@@ -1,8 +1,14 @@
 #include <string>
 
-enum WorldType { Normal, Nether, End };
+enum WorldType
+{
+    Normal,
+    Nether,
+    End
+};
 
-class World {
+class World
+{
 public:
-  World(std::string name)
+    World(std::string name)
 }
