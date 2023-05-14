@@ -11,6 +11,7 @@ endif()
 
 find_package(spdlog REQUIRED)
 find_package(EnTT REQUIRED)
+find_package(uvw REQUIRED)
 
 find_program(MOLD_LINKER_EXE mold)
 
@@ -36,4 +37,5 @@ target_sources(${PROJECT_NAME} PRIVATE ${SOURCES})
 target_link_libraries(${PROJECT_NAME} PRIVATE 
     spdlog::spdlog
     EnTT::EnTT
+    uvw::uvw
 )
