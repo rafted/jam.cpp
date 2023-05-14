@@ -8,3 +8,8 @@ struct Alive
     double health;
     double food;
 };
+
+enum EntityType
+{
+    Player
+};

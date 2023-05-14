@@ -18,6 +18,7 @@ int main()
     const auto entity = registry.create();
 
     // add basic components to test entity
+    registry.emplace<EntityType>(entity, EntityType::Player);
     registry.emplace<Location>(entity, 0, 0, 0, world_ptr);
     registry.emplace<Alive>(entity, 20, 20);
 
