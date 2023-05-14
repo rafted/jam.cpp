@@ -1,6 +1,8 @@
 #include <memory>
 #include <string>
 
+#pragma once
+
 enum WorldType
 {
     Normal,
@@ -22,18 +24,8 @@ public:
     }
 };
 
-class Location
+struct Location
 {
-public:
     double x, y, z;
     std::shared_ptr<World> world;
-
-public:
-    Location(double x, double y, double z, std::shared_ptr<World> world)
-        : x { x }
-        , y { y }
-        , z { z }
-        , world { world }
-    {
-    }
 };
