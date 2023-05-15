@@ -16,7 +16,6 @@ public:
     std::string name;
     WorldType type;
 
-public:
     World(std::string name, WorldType type)
         : name { name }
         , type { type }
