@@ -25,7 +25,12 @@ int main()
     // registry.emplace<Location>(entity, 0, 0, 0, world_ptr);
     // registry.emplace<Alive>(entity, 20, 20);
 
+    // create uv loop
     auto loop = uvw::loop::get_default();
 
+    Server server(loop, "0.0.0.0", 25565);
+    server.start();
+
+    // run event
     loop->run();
 }

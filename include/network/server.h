@@ -9,13 +9,18 @@
 class Server
 {
 public:
+    std::string host;
+    int port;
+
     std::shared_ptr<uvw::loop> loop;
     std::shared_ptr<uvw::tcp_handle> tcp_handle;
 
-    Server(std::shared_ptr<uvw::loop> loop)
+    Server(std::shared_ptr<uvw::loop> loop, std::string host, int port)
         : loop(loop)
+        , host(host)
+        , port(port)
     {
     }
 
-    void start(std::string host, int port);
+    void start();
 };
