@@ -37,4 +37,6 @@ void Server::start()
     // bind the server
     this->tcp_handle->bind(host, port);
     this->tcp_handle->listen();
+
+    spdlog::info("Listening on {}:{}", host, port);
 }
