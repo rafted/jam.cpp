@@ -1,0 +1,3 @@
+[submodule "external/workflow"]
+	path = external/workflow
+	url = https://github.com/sogou/workflow
