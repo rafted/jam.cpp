@@ -1,6 +1,6 @@
-#include "../include/entity.h"
-#include "../include/network/server.h"
-#include "../include/world.h"
+#include "entity.h"
+#include "network/server.h"
+#include "world.h"
 #include <entt/entt.hpp>
 #include <exception>
 #include <memory>

@@ -25,7 +25,7 @@ else()
     message(WARNING "mold linker not found on this system. Using default linker instead.")
 endif()
 
-file(GLOB_RECURSE SOURCES 
+file(GLOB_RECURSE SOURCES
     ${PROJECT_SOURCE_DIR}/src/*.cpp
     ${PROJECT_SOURCE_DIR}/src/*.h
     ${PROJECT_SOURCE_DIR}/include/*.h
@@ -34,7 +34,12 @@ file(GLOB_RECURSE SOURCES
 add_executable(${PROJECT_NAME} ${SOURCES})
 target_sources(${PROJECT_NAME} PRIVATE ${SOURCES})
 
-target_link_libraries(${PROJECT_NAME} PRIVATE 
+target_include_directories(${PROJECT_NAME} PRIVATE
+    ${PROJECT_SOURCE_DIR}
+    include
+)
+
+target_link_libraries(${PROJECT_NAME} PRIVATE
     spdlog::spdlog
     EnTT::EnTT
     uv

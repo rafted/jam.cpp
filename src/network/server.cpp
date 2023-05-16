@@ -1,5 +1,5 @@
-#include "../../include/network/server.h"
-#include "../../include/network/connection.h"
+#include "network/server.h"
+#include "network/connection.h"
 #include <spdlog/spdlog.h>
 #include <uvw/stream.h>
 
