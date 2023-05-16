@@ -2,6 +2,7 @@
 
 #include <memory>
 #include <uvw.hpp>
+#include <uvw/tcp.h>
 
 enum ConnectionState
 {
@@ -14,20 +15,17 @@ enum ConnectionState
 
 class Connection
 {
-private:
-    typedef std::shared_ptr<uvw::tcp_handle> TcpHandle;
-
 public:
-    TcpHandle tcp_handle;
+    std::shared_ptr<uvw::tcp_handle> tcp_handle;
 
     ConnectionState state;
 
-    Connection(TcpHandle tcp_handle)
+    Connection(std::shared_ptr<uvw::tcp_handle> tcp_handle)
         : tcp_handle(tcp_handle)
         , state(ConnectionState::Handshake)
     {
     }
 };
 
-void handle_end(const uvw::end_event &, uvw::tcp_handle &client);
-void handle_data(const uvw::data_event &, uvw::tcp_handle &);
+void handle_end(const uvw::end_event &event, uvw::tcp_handle &client);
+void handle_data(const uvw::data_event &event, uvw::tcp_handle &);

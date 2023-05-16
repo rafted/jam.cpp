@@ -9,6 +9,11 @@
 
 int main()
 {
+#ifdef NDEBUG
+#else
+    spdlog::set_level(spdlog::level::debug);
+#endif
+
     spdlog::info("Starting Jam");
 
     // entt::registry registry;

@@ -1,6 +1,8 @@
 #pragma once
 
+#include "network/connection.h"
 #include <memory>
+#include <spdlog/spdlog.h>
 #include <string>
 #include <uvw.hpp>
 #include <uvw/loop.h>
