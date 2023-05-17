@@ -10,8 +10,6 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 
 find_package(spdlog REQUIRED)
-find_package(EnTT REQUIRED)
-find_package(uvw REQUIRED)
 
 find_program(MOLD_LINKER_EXE mold)
 
@@ -34,6 +32,9 @@ file(GLOB_RECURSE SOURCES
 add_executable(${PROJECT_NAME} ${SOURCES})
 target_sources(${PROJECT_NAME} PRIVATE ${SOURCES})
 
+add_subdirectory(thirdparty/uvw)
+add_subdirectory(thirdparty/entt)
+
 target_include_directories(${PROJECT_NAME} PRIVATE
     ${PROJECT_SOURCE_DIR}
     include
@@ -41,7 +42,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
     spdlog::spdlog
-    EnTT::EnTT
+    entt
     uv
-    uvw::uvw
+    uvw
 )
