@@ -42,6 +42,8 @@ void handle_listen(const uvw::listen_event &, uvw::tcp_handle &server_tcp_handle
     // dependency injection -- inject Connection into the tcp_handle of the connection
     client_tcp_handle->data(std::make_shared<Connection>(connection));
 
+    client_tcp_handle->read();
+
     auto sock = client_tcp_handle->sock();
     spdlog::info("Accepted connection from {}:{}", sock.ip, sock.port);
 }
