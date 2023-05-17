@@ -32,6 +32,7 @@ file(GLOB_RECURSE SOURCES
 add_executable(${PROJECT_NAME} ${SOURCES})
 target_sources(${PROJECT_NAME} PRIVATE ${SOURCES})
 
+add_subdirectory(thirdparty/spdlog)
 add_subdirectory(thirdparty/uvw)
 add_subdirectory(thirdparty/entt)
 
@@ -41,7 +42,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
-    spdlog::spdlog
+    spdlog
     entt
     uv
     uvw
