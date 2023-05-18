@@ -58,7 +58,7 @@ void Server::start()
     this->tcp_handle->on<uvw::listen_event>(handle_listen);
 
     // dependency injection -- inject Server into the tcp_handle of the server
-    this->tcp_handle->data(std::make_shared<Server>(this));
+    this->tcp_handle->data(std::make_shared<Server>(*this));
 
     // bind the server
     this->tcp_handle->bind(host, port);
