@@ -1,7 +1,8 @@
 #include "network/container.h"
 
-class Packet {
-  virtual PacketContainer encode();
+class Packet
+{
+    virtual PacketContainer encode();
 
-  virtual void decode(PacketContainer container);
+    virtual void decode(PacketContainer container);
 };
