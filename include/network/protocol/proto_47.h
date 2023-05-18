@@ -12,6 +12,13 @@ namespace proto_47
 
         namespace serverbound
         {
+            class HandshakePacket : public Packet
+            {
+            public:
+                void decode(PacketContainer container) override {
+
+                };
+            };
         }
 
     }

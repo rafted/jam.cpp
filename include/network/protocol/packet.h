@@ -2,6 +2,7 @@
 
 class Packet
 {
+public:
     virtual PacketContainer encode();
 
     virtual void decode(PacketContainer container);
