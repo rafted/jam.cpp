@@ -9,8 +9,6 @@ if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Release)
 endif()
 
-find_package(spdlog REQUIRED)
-
 find_program(MOLD_LINKER_EXE mold)
 
 if(MOLD_LINKER_EXE)
