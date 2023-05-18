@@ -4,20 +4,6 @@
 #include <spdlog/spdlog.h>
 #include <uvw/stream.h>
 
-// std::shared_ptr<Server> Server::instance;
-//
-// std::shared_ptr<Connection> Server::find_connection_from_handle(uvw::tcp_handle *handle)
-// {
-//     auto it = handle_connection_map.find(handle);
-//
-//     if (it != handle_connection_map.end())
-//     {
-//         return it->second;
-//     }
-//
-//     return std::shared_ptr<Connection>(nullptr);
-// }
-
 void handle_error(const uvw::error_event &error, uvw::tcp_handle &)
 {
     spdlog::error(error.what());
