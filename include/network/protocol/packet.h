@@ -5,7 +5,7 @@
 class Packet
 {
 public:
-    virtual PacketContainer encode();
+    virtual PacketContainer encode() = 0;
 
-    virtual void decode(PacketContainer container);
+    virtual void decode(PacketContainer container) = 0;
 };

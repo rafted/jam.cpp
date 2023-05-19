@@ -1,6 +1,11 @@
 #pragma once
 
+#include "network/container.h"
+#include "network/protocol/encoding/numbers.h"
+#include "network/protocol/encoding/string.h"
+#include "network/protocol/encoding/varnums.h"
 #include "network/protocol/packet.h"
+#include <string>
 
 namespace proto_47
 {
@@ -17,8 +22,21 @@ namespace proto_47
             class HandshakePacket : public Packet
             {
             public:
-                void decode(PacketContainer container) override {
+                int32_t protocol_version;
+                std::string server_address;
+                unsigned short server_port;
+                int32_t next_state;
 
+                HandshakePacket() { }
+
+                virtual PacketContainer encode() {};
+
+                void decode(PacketContainer container) override
+                {
+                    this->protocol_version = read_varnum<int32_t>(container.data);
+                    this->server_address = read_string(container.data);
+                    this->server_port = read_big_endian<unsigned short>(container.data);
+                    this->next_state = read_varnum<int32_t>(container.data);
                 };
             };
         }
