@@ -1,3 +1,5 @@
+#pragma once
+
 #include "network/container.h"
 
 class Packet

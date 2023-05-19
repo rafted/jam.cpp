@@ -1,3 +1,5 @@
+#pragma once
+
 #include "network/protocol/packet.h"
 
 namespace proto_47

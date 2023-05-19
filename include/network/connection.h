@@ -17,6 +17,7 @@ class Connection
 {
 public:
     std::shared_ptr<uvw::tcp_handle> tcp_handle;
+    std::vector<char> buffer;
 
     ConnectionState state;
 

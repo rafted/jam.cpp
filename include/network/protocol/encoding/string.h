@@ -1,3 +1,5 @@
+#pragma once
+
 #include "network/protocol/encoding/varnums.h"
 #include <array>
 #include <cstdint>
