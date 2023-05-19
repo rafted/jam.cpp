@@ -30,12 +30,12 @@ robust Minecraft server experience.
 ## Key Objectives
 Jam sets out to achieve the following objectives:
 
-    High Performance: Utilizing C++, Jam aims to significantly improve the
-    server's performance and lower the memory footprint compared to the
-    existing Java implementation. This optimization will ensure smoother
-    multiplayer experiences, even on weak machines.
+- High Performance: Utilizing C++, Jam aims to significantly improve the
+server's performance and lower the memory footprint compared to the
+existing Java implementation. This optimization will ensure smoother
+multiplayer experiences, even on weak machines.
 
-    Scalability and Flexibility: Jam focuses on designing a modular and
-    extensible server architecture that can easily adapt to varying player
-    counts and server configurations. This flexibility will allow server owners
-    to efficiently manage and scale their Minecraft servers.
+- Scalability and Flexibility: Jam focuses on designing a modular and
+extensible server architecture that can easily adapt to varying player
+counts and server configurations. This flexibility will allow server owners
+to efficiently manage and scale their Minecraft servers.
