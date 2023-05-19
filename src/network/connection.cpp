@@ -14,13 +14,6 @@ void handle_end(const uvw::end_event &, uvw::tcp_handle &client_handle)
     spdlog::info("Closed connection from {}:{}", client_handle.sock().ip, client_handle.sock().port);
 }
 
-std::vector<char> copy_data(const std::unique_ptr<char[]> &data, std::size_t size)
-{
-    std::vector<char> output(data.get(), data.get() + size);
-
-    return output;
-}
-
 void handle_data(const uvw::data_event &event, uvw::tcp_handle &client_handle)
 {
     std::shared_ptr<Connection> connection = client_handle.data<Connection>();
