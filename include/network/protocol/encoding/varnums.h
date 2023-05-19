@@ -9,23 +9,27 @@ T read_varnum(std::vector<char> &data)
 {
     T value = 0;
     int position = 0;
-    char current_byte;
 
-    for (auto &byte : data)
+    for (std::size_t i = 0; i < data.size(); ++i)
     {
-        current_byte = byte;
-        value |= (T) (current_byte & 0x7F) << position;
+        char current_byte = data[i];
+        value |= static_cast<T>(current_byte & 0x7F) << position;
 
         if ((current_byte & 0x80) == 0)
-            break;
+        {
+            data.erase(data.begin(), data.begin() + i + 1);
+            return value;
+        }
 
         position += 7;
 
         if (position >= sizeof(T) * 8)
+        {
             throw std::length_error("VarNum is too big");
+        }
     }
 
-    return value;
+    throw std::length_error("VarNum decoding failed");
 }
 
 template<typename T>
