@@ -5,13 +5,13 @@ const int SEGMENT_BITS = 0x7F;
 const int CONTINUE_BIT = 0x80;
 
 template<typename T>
-T read_varnum(const std::vector<unsigned char> &data)
+T read_varnum(std::vector<char> &data)
 {
     T value = 0;
     int position = 0;
-    unsigned char current_byte;
+    char current_byte;
 
-    for (const auto &byte : data)
+    for (auto &byte : data)
     {
         current_byte = byte;
         value |= (T) (current_byte & 0x7F) << position;
@@ -29,19 +29,21 @@ T read_varnum(const std::vector<unsigned char> &data)
 }
 
 template<typename T>
-std::vector<unsigned char> write_varnum(std::vector<unsigned char> &output, T value)
+void write_varnum(std::vector<char> &buffer, T value)
 {
     while (true)
     {
         if ((value & ~static_cast<T>(SEGMENT_BITS)) == 0)
         {
-            output.push_back(static_cast<unsigned char>(value));
-            return output;
+            buffer.push_back(static_cast<char>(value));
+            return;
         }
 
-        output.push_back(static_cast<unsigned char>((value & SEGMENT_BITS) | CONTINUE_BIT));
+        buffer.push_back(static_cast<char>((value & SEGMENT_BITS) | CONTINUE_BIT));
 
         // Note: Right shift operator >>> is not available in C++. Instead, we use arithmetic right shift.
         value >>= 7;
     }
+
+    return;
 }

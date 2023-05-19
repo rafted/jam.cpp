@@ -3,9 +3,10 @@
 #include <cstring>
 #include <stdexcept>
 #include <string>
+#include <array>
 #include <vector>
 
-void write_string(std::vector<unsigned char> &buffer, const std::string &str)
+void write_string(std::vector<char> &buffer, const std::string &str)
 {
     const std::size_t length = str.length();
     if (length > 32767)
