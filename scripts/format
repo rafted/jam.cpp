@@ -1,4 +1,8 @@
 #!/bin/sh
 
-find . -name *.cpp | xargs clang-format -i
-find . -name *.h | xargs clang-format -i
+format_dir() {
+  find $1 -regex '.*\.\(cpp\|h\)' -exec clang-format -i {} \;
+}
+
+format_dir './src/'
+format_dir './include/'
