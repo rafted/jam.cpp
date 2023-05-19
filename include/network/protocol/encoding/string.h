@@ -1,9 +1,9 @@
 #include "network/protocol/encoding/varnums.h"
+#include <array>
 #include <cstdint>
 #include <cstring>
 #include <stdexcept>
 #include <string>
-#include <array>
 #include <vector>
 
 void write_string(std::vector<char> &buffer, const std::string &str)
@@ -22,4 +22,24 @@ void write_string(std::vector<char> &buffer, const std::string &str)
     buffer.resize(old_size + length);
 
     std::memcpy(&buffer[old_size], str.data(), length);
+}
+
+std::string read_string(std::vector<char> &data)
+{
+    std::int32_t length = read_varnum<std::int32_t>(data);
+    if (length < 0)
+    {
+        throw std::length_error("Invalid string length");
+    }
+
+    std::string result;
+
+    // reserve memory
+    result.resize(length);
+
+    std::memcpy(result.data(), data.data(), length);
+
+    data.erase(data.begin(), data.begin() + length);
+
+    return result;
 }
