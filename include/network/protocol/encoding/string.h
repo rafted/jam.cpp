@@ -6,6 +6,23 @@
 #include <string>
 #include <vector>
 
+std::string read_string(std::vector<char> &data)
+{
+    std::int32_t length = read_varnum<std::int32_t>(data);
+
+    if (static_cast<std::size_t>(length) > data.size())
+    {
+        throw std::length_error("not enough data to fill buffer");
+    }
+
+    std::string result(data.begin(), data.begin() + length);
+
+    data.erase(data.begin(), data.begin() + length);
+    data.shrink_to_fit();
+
+    return result;
+}
+
 void write_string(std::vector<char> &buffer, const std::string &str)
 {
     const std::size_t length = str.length();
@@ -22,24 +39,4 @@ void write_string(std::vector<char> &buffer, const std::string &str)
     buffer.resize(old_size + length);
 
     std::memcpy(&buffer[old_size], str.data(), length);
-}
-
-std::string read_string(std::vector<char> &data)
-{
-    std::int32_t length = read_varnum<std::int32_t>(data);
-    if (length < 0)
-    {
-        throw std::length_error("Invalid string length");
-    }
-
-    std::string result;
-
-    // reserve memory
-    result.resize(length);
-
-    std::memcpy(result.data(), data.data(), length);
-
-    data.erase(data.begin(), data.begin() + length);
-
-    return result;
 }

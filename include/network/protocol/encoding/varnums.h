@@ -18,15 +18,14 @@ T read_varnum(std::vector<char> &data)
         if ((current_byte & 0x80) == 0)
         {
             data.erase(data.begin(), data.begin() + i + 1);
+            data.shrink_to_fit();
             return value;
         }
 
         position += 7;
 
         if (position >= sizeof(T) * 8)
-        {
             throw std::length_error("VarNum is too big");
-        }
     }
 
     throw std::length_error("VarNum decoding failed");
