@@ -1,6 +1,6 @@
 ## Motivation
 For over a decade, Mojang's Java-based Minecraft Server implementation (and its
-derivatives like [https://spigotmc.org](Spigot) and [https://papermc.io](Paper)
+derivatives like [Spigot](https://spigotmc.org) and [Paper](https://papermc.io)
 have been widely utilized in Minecraft servers of small and large scale.
 
 Regardless of how widely this implementation is used, there are quite a few
