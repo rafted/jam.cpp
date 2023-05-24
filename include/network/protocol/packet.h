@@ -6,24 +6,7 @@
 class Packet
 {
     virtual PacketContainer encode();
-};
-
-class PacketPlayLook : public Packet
-{
-public:
-    float pitch;
-    float yaw;
-
-    PacketContainer encode() override
-    {
-        spdlog::debug("encoding PacketPlayLook");
-        return PacketContainer {};
-    }
-
-    static void decode(PacketContainer container)
-    {
-        spdlog::debug("decoding PacketPlayLook");
-    }
+    virtual void decode(PacketContainer container);
 };
 
 class PacketRegistry

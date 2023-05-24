@@ -29,7 +29,10 @@ namespace proto_47
 
                 HandshakePacket() { }
 
-                virtual PacketContainer encode() {};
+                PacketContainer encode() override
+                {
+                    return PacketContainer {};
+                }
 
                 void decode(PacketContainer container) override
                 {
@@ -37,7 +40,7 @@ namespace proto_47
                     this->server_address = read_string(container.data);
                     this->server_port = read_big_endian<unsigned short>(container.data);
                     this->next_state = read_varnum<int32_t>(container.data);
-                };
+                }
             };
         }
 

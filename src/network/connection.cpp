@@ -29,16 +29,16 @@ void handle_data(const uvw::data_event &event, uvw::tcp_handle &client_handle)
 
     {
         auto container = PacketContainer::read_packet(connection->buffer);
-        proto_47::handshaking::serverbound::HandshakePacket pkt;
+        // proto_47::handshaking::serverbound::HandshakePacket pkt;
 
-        pkt.decode(container);
+        // pkt.decode(container);
 
-        spdlog::debug("packet length: {}", container.length);
-        spdlog::debug("packet id: {}", container.id);
+        // spdlog::debug("packet length: {}", container.length);
+        // spdlog::debug("packet id: {}", container.id);
 
-        spdlog::debug("Protocol Version: {}", pkt.protocol_version);
-        spdlog::debug("Server Address: {}", pkt.server_address);
-        spdlog::debug("Server Port: {}", pkt.server_port);
-        spdlog::debug("Next State: {}", pkt.next_state);
+        // spdlog::debug("Protocol Version: {}", pkt.protocol_version);
+        // spdlog::debug("Server Address: {}", pkt.server_address);
+        // spdlog::debug("Server Port: {}", pkt.server_port);
+        // spdlog::debug("Next State: {}", pkt.next_state);
     }
 }
