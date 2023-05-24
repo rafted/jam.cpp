@@ -8,19 +8,25 @@
 #include <uvw/loop.h>
 #include <uvw/tcp.h>
 
-class Server
+struct Properties
 {
-public:
     std::string host;
     int port;
 
+    int protocol;
+};
+
+class Server
+{
+public:
     std::shared_ptr<uvw::loop> loop;
     std::shared_ptr<uvw::tcp_handle> tcp_handle;
 
-    Server(std::shared_ptr<uvw::loop> loop, std::string host, int port)
+    Properties properties;
+
+    Server(std::shared_ptr<uvw::loop> loop, Properties properties)
         : loop(loop)
-        , host(host)
-        , port(port)
+        , properties(properties)
     {
     }
 

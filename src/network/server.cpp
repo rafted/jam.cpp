@@ -47,6 +47,9 @@ void Server::start()
     this->tcp_handle->data(std::make_shared<Server>(*this));
 
     // bind the server
+    auto host = this->properties.host;
+    auto port = this->properties.port;
+
     this->tcp_handle->bind(host, port);
     this->tcp_handle->listen();
 

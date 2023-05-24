@@ -33,7 +33,13 @@ int main()
     // create uv loop
     auto loop = uvw::loop::get_default();
 
-    Server server(loop, "0.0.0.0", 25565);
+    Properties properties = {
+        .host = "",
+        .port = 25565,
+        .protocol = 47
+    };
+
+    Server server(loop, properties);
     server.start();
 
     // run event
