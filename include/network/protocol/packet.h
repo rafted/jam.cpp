@@ -32,9 +32,6 @@ public:
 class PacketRegistry
 {
 public:
-    // typedef std::function<PacketContainer(Packet &)> EncodeFn;
-    // typedef std::function<PacketContainer(Packet &, PacketContainer)> DecodeFn;
-
     typedef PacketContainer (*EncodeFn)(Packet &);
     typedef PacketContainer (*DecodeFn)(Packet &, PacketContainer);
 
