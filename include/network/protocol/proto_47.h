@@ -88,12 +88,6 @@ namespace proto_47
     {
         PacketRegistry registry;
 
-        // registry.emplace<handshaking::serverbound::HandshakePacket>(
-        //     Serverbound,
-        //     0,
-        //     &handshaking::serverbound::HandshakePacket::encode,
-        //     &handshaking::serverbound::HandshakePacket::decode);
-
         registry.emplace<handshaking::serverbound::HandshakePacket>(
             Serverbound,
             0,
