@@ -9,7 +9,6 @@
 
 namespace proto_47
 {
-
     namespace handshaking
     {
 
@@ -83,6 +82,25 @@ namespace proto_47
         {
         }
 
+    }
+
+    static PacketRegistry make_packet_registry()
+    {
+        PacketRegistry registry;
+
+        // registry.emplace<handshaking::serverbound::HandshakePacket>(
+        //     Serverbound,
+        //     0,
+        //     &handshaking::serverbound::HandshakePacket::encode,
+        //     &handshaking::serverbound::HandshakePacket::decode);
+
+        registry.emplace<handshaking::serverbound::HandshakePacket>(
+            Serverbound,
+            0,
+            &Packet::EncodeWrapper,
+            &Packet::DecodeWrapper);
+
+        return registry;
     }
 
 }

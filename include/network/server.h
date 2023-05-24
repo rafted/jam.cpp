@@ -1,6 +1,7 @@
 #pragma once
 
 #include "network/connection.h"
+#include "network/protocol/packet.h"
 #include <memory>
 #include <spdlog/spdlog.h>
 #include <string>
@@ -19,15 +20,18 @@ struct Properties
 class Server
 {
 public:
+    Properties properties;
+
     std::shared_ptr<uvw::loop> loop;
     std::shared_ptr<uvw::tcp_handle> tcp_handle;
 
-    Properties properties;
+    // std::unique_ptr<PacketRegistry> packet_registry;
 
     Server(std::shared_ptr<uvw::loop> loop, Properties properties)
         : loop(loop)
         , properties(properties)
     {
+        // packet_registry = std::make_unique<PacketRegistry>(PacketRegistry());
     }
 
     void start();
