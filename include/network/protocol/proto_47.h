@@ -97,8 +97,8 @@ namespace proto_47
         registry.emplace<handshaking::serverbound::HandshakePacket>(
             Serverbound,
             0,
-            &Packet::EncodeWrapper,
-            &Packet::DecodeWrapper);
+            &Packet::encode_wrapper,
+            &Packet::decode_wrapper);
 
         return registry;
     }
