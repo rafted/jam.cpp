@@ -17,12 +17,12 @@ class Packet
     virtual void decode(PacketContainer container);
 
 public:
-    static PacketContainer EncodeWrapper(Packet &packet)
+    static PacketContainer encode_wrapper(Packet &packet)
     {
         return packet.encode();
     }
 
-    static PacketContainer DecodeWrapper(Packet &packet, PacketContainer container)
+    static PacketContainer decode_wrapper(Packet &packet, PacketContainer container)
     {
         packet.decode(container);
         return container;
