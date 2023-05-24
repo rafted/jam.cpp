@@ -1,5 +1,6 @@
 #pragma once
 
+#include "network/connection.h"
 #include "network/container.h"
 #include "network/protocol/encoding/numbers.h"
 #include "network/protocol/encoding/string.h"
@@ -89,6 +90,7 @@ namespace proto_47
         PacketRegistry registry;
 
         registry.emplace<handshaking::serverbound::HandshakePacket>(
+            Handshake,
             Serverbound,
             0,
             &Packet::encode_wrapper,
