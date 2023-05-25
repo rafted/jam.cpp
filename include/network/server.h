@@ -35,7 +35,5 @@ public:
         packet_registry = proto_47::make_packet_registry();
     }
 
-    
-
     void start();
 };

@@ -80,11 +80,7 @@ public:
             return Packet::constructor_wrapper<T>();
         };
 
-        auto pair = std::pair(make_id(state, direction, id), PacketRegistryEntry {
-            .encode = encode,
-            .decode = decode,
-            .constructor = constructor
-        });
+        auto pair = std::pair(make_id(state, direction, id), PacketRegistryEntry { .encode = encode, .decode = decode, .constructor = constructor });
 
         packets.insert(pair);
     }
