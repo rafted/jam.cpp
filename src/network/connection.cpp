@@ -1,6 +1,7 @@
 #include "network/connection.h"
 #include "network/container.h"
 #include "network/protocol/encoding/varnums.h"
+#include "network/protocol/packet.h"
 #include "network/protocol/proto_47.h"
 #include "network/server.h"
 #include <memory>
@@ -19,7 +20,7 @@ void handle_data(const uvw::data_event &event, uvw::tcp_handle &client_handle)
 {
     std::shared_ptr<Connection> connection = client_handle.data<Connection>();
 
-    spdlog::debug("handle_data called");
+    spdlog::debug("Received Data");
 
     // insert the data into the connection's buffer
     const std::unique_ptr<char[]> &data_ptr = event.data;
@@ -28,17 +29,23 @@ void handle_data(const uvw::data_event &event, uvw::tcp_handle &client_handle)
     connection->buffer.insert(connection->buffer.end(), temp.begin(), temp.end());
 
     {
+        // read packet container
         auto container = PacketContainer::read_packet(connection->buffer);
-        // proto_47::handshaking::serverbound::HandshakePacket pkt;
 
-        // pkt.decode(container);
+        auto state = static_cast<int>(connection->state);
+        spdlog::debug("Packet Received (Connection State: {}, Packet Length: {}, Packet ID: {})", state, container.length, container.id);
 
-        // spdlog::debug("packet length: {}", container.length);
-        // spdlog::debug("packet id: {}", container.id);
+        // get encoder & decoder
+        auto server = client_handle.parent().data<Server>();
+        auto entry = server->packet_registry.get(connection->state, Serverbound, container.id);
 
-        // spdlog::debug("Protocol Version: {}", pkt.protocol_version);
-        // spdlog::debug("Server Address: {}", pkt.server_address);
-        // spdlog::debug("Server Port: {}", pkt.server_port);
-        // spdlog::debug("Next State: {}", pkt.next_state);
+        // entry.constructor();
+
+        // decode packet by its type
+        // const void *packet = nullptr;
+        //
+        // packet = reinterpret_cast<const void*>(entry.constructor());
+        //
+        // spdlog::debug("packet type: {}", typeid(packet).name());
     }
 }

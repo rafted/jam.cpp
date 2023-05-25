@@ -26,14 +26,16 @@ public:
     std::shared_ptr<uvw::loop> loop;
     std::shared_ptr<uvw::tcp_handle> tcp_handle;
 
-    std::unique_ptr<PacketRegistry> packet_registry;
+    PacketRegistry packet_registry;
 
     Server(std::shared_ptr<uvw::loop> loop, Properties properties)
         : loop(loop)
         , properties(properties)
     {
-        packet_registry = std::make_unique<PacketRegistry>(proto_47::make_packet_registry());
+        packet_registry = proto_47::make_packet_registry();
     }
+
+    
 
     void start();
 };

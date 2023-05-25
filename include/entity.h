@@ -1,7 +1,7 @@
+#pragma once
+
 #include "world.h"
 #include <memory>
-
-#pragma once
 
 struct Alive
 {
