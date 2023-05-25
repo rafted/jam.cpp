@@ -86,7 +86,7 @@ public:
         };
 
         spdlog::debug("added packet with id {}", make_id(state, direction, id));
-        spdlog::debug("length of packets is now", packets.size());
+        spdlog::debug("length of packets is now {}", packets.size());
     }
 
     PacketRegistryEntry get(ConnectionState state, Direction direction, int id)
