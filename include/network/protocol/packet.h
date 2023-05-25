@@ -4,6 +4,7 @@
 #include "network/container.h"
 #include <functional>
 #include <map>
+#include <memory>
 #include <spdlog/spdlog.h>
 #include <type_traits>
 
@@ -79,11 +80,13 @@ public:
             return Packet::constructor_wrapper<T>();
         };
 
-        packets[make_id(state, direction, id)] = PacketRegistryEntry {
+        auto pair = std::pair(make_id(state, direction, id), PacketRegistryEntry {
             .encode = encode,
             .decode = decode,
             .constructor = constructor
-        };
+        });
+
+        packets.insert(pair);
 
         spdlog::debug("added packet with id {}", make_id(state, direction, id));
         spdlog::debug("length of packets is now {}", packets.size());
@@ -91,7 +94,7 @@ public:
 
     PacketRegistryEntry get(ConnectionState state, Direction direction, int id)
     {
-        return packets[make_id(state, direction, id)];
+        return packets.at(make_id(state, direction, id));
     }
 
 private:
