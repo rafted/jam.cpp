@@ -43,8 +43,8 @@ void Server::start()
     this->tcp_handle->on<uvw::error_event>(handle_error);
     this->tcp_handle->on<uvw::listen_event>(handle_listen);
 
-    // dependency injection -- inject Server into the tcp_handle of the server
-    this->tcp_handle->data(std::make_shared<Server>(*this));
+    // dependency injection -- inject Server into the event loop
+    this->loop->data(std::make_shared<Server>(*this));
 
     // bind the server
     auto host = this->properties.host;
