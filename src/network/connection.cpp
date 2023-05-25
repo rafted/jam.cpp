@@ -39,13 +39,12 @@ void handle_data(const uvw::data_event &event, uvw::tcp_handle &client_handle)
         auto server = client_handle.parent().data<Server>();
         auto entry = server->packet_registry.get(connection->state, Serverbound, container.id);
 
-        // entry.constructor();
-
         // decode packet by its type
-        // const void *packet = nullptr;
-        //
-        // packet = reinterpret_cast<const void*>(entry.constructor());
-        //
-        // spdlog::debug("packet type: {}", typeid(packet).name());
+        const void *packet = nullptr;
+
+        packet = reinterpret_cast<const void*>(entry.constructor());
+        // TODO: decode using entry.decode
+
+        spdlog::debug("packet type: {}", typeid(packet).name());
     }
 }
