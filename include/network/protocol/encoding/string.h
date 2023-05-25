@@ -8,7 +8,7 @@
 #include <string>
 #include <vector>
 
-std::string read_string(std::vector<char> &data)
+inline std::string read_string(std::vector<char> &data)
 {
     std::int32_t length = read_varnum<std::int32_t>(data);
 
@@ -25,7 +25,7 @@ std::string read_string(std::vector<char> &data)
     return result;
 }
 
-void write_string(std::vector<char> &buffer, const std::string &str)
+inline void write_string(std::vector<char> &buffer, const std::string &str)
 {
     const std::size_t length = str.length();
     if (length > 32767)
