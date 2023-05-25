@@ -34,7 +34,7 @@ int main()
     auto loop = uvw::loop::get_default();
 
     Properties properties = {
-        .host = "",
+        .host = "0.0.0.0",
         .port = 25565,
         .protocol = 47
     };
