@@ -5,6 +5,7 @@
 #include <functional>
 #include <map>
 #include <spdlog/spdlog.h>
+#include <type_traits>
 
 enum Direction
 {
@@ -14,8 +15,8 @@ enum Direction
 
 class Packet
 {
-    virtual PacketContainer encode();
-    virtual void decode(PacketContainer container);
+    virtual PacketContainer encode() { }
+    virtual void decode(PacketContainer container) { }
 
 public:
     static PacketContainer encode_wrapper(Packet &packet)
@@ -28,21 +29,44 @@ public:
         packet.decode(container);
         return container;
     }
+
+    template<typename T>
+    static Packet *constructor_wrapper()
+    {
+        static_assert(std::is_base_of_v<Packet, T>, "T must derive from Packet");
+
+        T *newPacket = new T();
+
+        return static_cast<Packet *>(newPacket);
+    }
+};
+
+typedef PacketContainer (*EncodeFn)(Packet &);
+typedef PacketContainer (*DecodeFn)(Packet &, PacketContainer);
+typedef Packet *(*ConstructorFn)();
+
+struct PacketRegistryEntry
+{
+    EncodeFn encode;
+    DecodeFn decode;
+
+    ConstructorFn constructor;
 };
 
 class PacketRegistry
 {
 public:
-    typedef PacketContainer (*EncodeFn)(Packet &);
-    typedef PacketContainer (*DecodeFn)(Packet &, PacketContainer);
-
     typedef unsigned long PacketId;
 
     PacketRegistry() { }
 
     int make_id(ConnectionState state, Direction direction, int id)
     {
-        return (state << 8) | (direction << 4) | id;
+        int stateInt = static_cast<int>(state);
+        int directionInt = static_cast<int>(direction);
+
+        // Perform the merging
+        return (stateInt << 8) | (directionInt << 4) | id;
     }
 
     template<typename T>
@@ -50,17 +74,23 @@ public:
     {
         static_assert(std::is_base_of_v<Packet, T>, "T must derive from Packet");
 
-        packets[make_id(state, direction, id)] = std::make_pair(encode, decode);
+        ConstructorFn constructor = []() -> Packet *
+        {
+            return Packet::constructor_wrapper<T>();
+        };
+
+        packets[make_id(state, direction, id)] = PacketRegistryEntry {
+            .encode = encode,
+            .decode = decode,
+            .constructor = constructor
+        };
     }
 
-    template<typename T>
-    std::pair<EncodeFn, DecodeFn> get(ConnectionState state, Direction direction, int id)
+    PacketRegistryEntry get(ConnectionState state, Direction direction, int id)
     {
-        static_assert(std::is_base_of_v<Packet, T>, "T must derive from Packet");
-
         return packets[make_id(state, direction, id)];
     }
 
 private:
-    std::map<unsigned int, std::pair<EncodeFn, DecodeFn>> packets;
+    std::map<unsigned int, PacketRegistryEntry> packets;
 };
