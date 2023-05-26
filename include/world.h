@@ -16,7 +16,7 @@ public:
     std::string name;
     WorldType type;
 
-    World(std::string name, WorldType type)
+    World(const std::string name, WorldType type)
         : name { name }
         , type { type }
     {

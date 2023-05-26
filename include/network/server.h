@@ -28,7 +28,7 @@ public:
 
     PacketRegistry packet_registry;
 
-    Server(std::shared_ptr<uvw::loop> loop, Properties properties)
+    Server(std::shared_ptr<uvw::loop> loop, const Properties properties)
         : loop(loop)
         , properties(properties)
     {
