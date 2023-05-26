@@ -1,11 +1,10 @@
 #pragma once
 
-#include "network/connection.h"
 #include "network/container.h"
 #include "network/protocol/encoding/numbers.h"
 #include "network/protocol/encoding/string.h"
-#include "network/protocol/encoding/varnums.h"
 #include "network/protocol/packet.h"
+#include "network/protocol/registry.h"
 #include <string>
 
 namespace proto_47
@@ -19,7 +18,7 @@ namespace proto_47
 
         namespace serverbound
         {
-            class HandshakePacket : public Packet
+            class HandshakePacket : public packet::Packet
             {
             public:
                 int32_t protocol_version;
@@ -85,16 +84,16 @@ namespace proto_47
 
     }
 
-    static PacketRegistry make_packet_registry()
+    static packet::registry::PacketRegistry make_packet_registry()
     {
-        PacketRegistry registry;
+        packet::registry::PacketRegistry registry;
 
         registry.emplace<handshaking::serverbound::HandshakePacket>(
             Handshake,
-            Serverbound,
+            packet::Direction::Serverbound,
             0,
-            &Packet::encode_wrapper,
-            &Packet::decode_wrapper);
+            &packet::Packet::encode_wrapper,
+            &packet::Packet::decode_wrapper);
 
         return registry;
     }

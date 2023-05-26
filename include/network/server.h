@@ -1,10 +1,8 @@
 #pragma once
 
-#include "network/connection.h"
-#include "network/protocol/packet.h"
-#include "network/protocol/proto_47.h"
+#include "network/protocol/implementations/proto_47.h"
 #include <memory>
-#include <spdlog/spdlog.h>
+#include <network/protocol/registry.h>
 #include <string>
 #include <uvw.hpp>
 #include <uvw/loop.h>
@@ -26,7 +24,7 @@ public:
     std::shared_ptr<uvw::loop> loop;
     std::shared_ptr<uvw::tcp_handle> tcp_handle;
 
-    PacketRegistry packet_registry;
+    packet::registry::PacketRegistry packet_registry;
 
     Server(std::shared_ptr<uvw::loop> loop, const Properties properties)
         : loop(loop)

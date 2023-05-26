@@ -1,8 +1,3 @@
-#include "network/connection.h"
-#include "network/container.h"
-#include "network/protocol/encoding/varnums.h"
-#include "network/protocol/packet.h"
-#include "network/protocol/proto_47.h"
 #include "network/server.h"
 #include <memory>
 #include <spdlog/spdlog.h>
@@ -37,7 +32,7 @@ void handle_data(const uvw::data_event &event, uvw::tcp_handle &client_handle)
 
         // get encoder & decoder
         auto server = client_handle.parent().data<Server>();
-        auto entry = server->packet_registry.get(connection->state, Serverbound, container.id);
+        auto entry = server->packet_registry.get(connection->state, packet::Direction::Serverbound, container.id);
 
         // decode packet by its type
         const void *packet = nullptr;
