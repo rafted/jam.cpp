@@ -24,7 +24,6 @@ endif()
 file(GLOB_RECURSE SOURCES
     ${PROJECT_SOURCE_DIR}/src/*.cpp
     ${PROJECT_SOURCE_DIR}/src/*.h
-    ${PROJECT_SOURCE_DIR}/include/*.h
 )
 
 add_executable(${PROJECT_NAME} ${SOURCES})
@@ -36,7 +35,7 @@ add_subdirectory(thirdparty/entt)
 
 target_include_directories(${PROJECT_NAME} PRIVATE
     ${PROJECT_SOURCE_DIR}
-    include
+    src
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
