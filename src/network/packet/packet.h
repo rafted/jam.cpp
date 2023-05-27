@@ -1,12 +1,14 @@
 #pragma once
 
-#include "network/container.h"
+#include "network/packet/container.h"
 #include <functional>
 #include <map>
 #include <memory>
 #include <spdlog/spdlog.h>
 #include <tuple>
 #include <type_traits>
+
+using namespace network::packet;
 
 namespace network::packet
 {

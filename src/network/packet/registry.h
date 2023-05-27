@@ -1,12 +1,11 @@
 #pragma once
 
 #include "network/connection.h"
-#include "network/protocol/packet.h"
+#include "network/packet/packet.h"
 #include <map>
 
-namespace network::packet
+namespace network::packet::registry
 {
-
     using PacketID = unsigned long;
 
     struct PacketRegistryEntry
@@ -45,9 +44,6 @@ namespace network::packet
             packets.insert(pair);
         }
 
-        PacketRegistryEntry get(ConnectionState state, Direction direction, int id)
-        {
-            return packets.at(get_packet_id(state, direction, id));
-        }
+        PacketRegistryEntry get(ConnectionState state, Direction direction, int id);
     };
 }
