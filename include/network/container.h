@@ -6,24 +6,27 @@
 #include <cstdint>
 #include <vector>
 
-struct PacketContainer
+namespace network
 {
-    int32_t length;
-    int32_t id;
-    std::vector<char> data;
-
-    static PacketContainer read_packet(std::vector<char> &data)
+    struct PacketContainer
     {
-        int32_t pkt_len = read_varnum<int32_t>(data) + 1;
-        int32_t pkt_id = read_varnum<int32_t>(data);
-        std::vector<char> pkt_data(data.begin(), data.begin() + pkt_len);
+        int32_t length;
+        int32_t id;
+        std::vector<char> data;
 
-        // construct PacketContainer
-        PacketContainer container = {};
-        container.length = pkt_len;
-        container.id = pkt_id;
-        container.data = pkt_data;
+        static PacketContainer read_packet(std::vector<char> &data)
+        {
+            int32_t pkt_len = protocol::encoding::read_varnum<int32_t>(data) + 1;
+            int32_t pkt_id = protocol::encoding::read_varnum<int32_t>(data);
+            std::vector<char> pkt_data(data.begin(), data.begin() + pkt_len);
 
-        return container;
-    }
-};
+            // construct PacketContainer
+            PacketContainer container = {};
+            container.length = pkt_len;
+            container.id = pkt_id;
+            container.data = pkt_data;
+
+            return container;
+        }
+    };
+}

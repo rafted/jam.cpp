@@ -8,7 +8,7 @@
 #include <tuple>
 #include <type_traits>
 
-namespace packet
+namespace network::packet
 {
     enum Direction
     {

@@ -7,6 +7,8 @@
 #include "network/protocol/registry.h"
 #include <string>
 
+using namespace network::protocol::encoding;
+
 namespace proto_47
 {
     namespace handshaking
@@ -18,7 +20,7 @@ namespace proto_47
 
         namespace serverbound
         {
-            class HandshakePacket : public packet::Packet
+            class HandshakePacket : public network::packet::Packet
             {
             public:
                 int32_t protocol_version;
@@ -28,12 +30,12 @@ namespace proto_47
 
                 HandshakePacket() { }
 
-                PacketContainer encode() override
+                network::PacketContainer encode() override
                 {
-                    return PacketContainer {};
+                    return network::PacketContainer {};
                 }
 
-                void decode(PacketContainer container) override
+                void decode(network::PacketContainer container) override
                 {
                     this->protocol_version = read_varnum<int32_t>(container.data);
                     this->server_address = read_string(container.data);
@@ -84,16 +86,16 @@ namespace proto_47
 
     }
 
-    static packet::registry::PacketRegistry make_packet_registry()
+    static network::packet::PacketRegistry make_packet_registry()
     {
-        packet::registry::PacketRegistry registry;
+        network::packet::PacketRegistry registry;
 
         registry.emplace<handshaking::serverbound::HandshakePacket>(
-            Handshake,
-            packet::Direction::Serverbound,
+            network::Handshake,
+            network::packet::Direction::Serverbound,
             0,
-            &packet::Packet::encode_wrapper,
-            &packet::Packet::decode_wrapper);
+            &network::packet::Packet::encode_wrapper,
+            &network::packet::Packet::decode_wrapper);
 
         return registry;
     }

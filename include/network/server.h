@@ -8,30 +8,33 @@
 #include <uvw/loop.h>
 #include <uvw/tcp.h>
 
-struct Properties
+namespace network
 {
-    std::string host;
-    int port;
-
-    int protocol;
-};
-
-class Server
-{
-public:
-    Properties properties;
-
-    std::shared_ptr<uvw::loop> loop;
-    std::shared_ptr<uvw::tcp_handle> tcp_handle;
-
-    packet::registry::PacketRegistry packet_registry;
-
-    Server(std::shared_ptr<uvw::loop> loop, const Properties properties)
-        : loop(loop)
-        , properties(properties)
+    struct Properties
     {
-        packet_registry = proto_47::make_packet_registry();
-    }
+        std::string host;
+        int port;
 
-    void start();
-};
+        int protocol;
+    };
+
+    class Server
+    {
+    public:
+        Properties properties;
+
+        std::shared_ptr<uvw::loop> loop;
+        std::shared_ptr<uvw::tcp_handle> tcp_handle;
+
+        network::packet::PacketRegistry packet_registry;
+
+        Server(std::shared_ptr<uvw::loop> loop, const Properties properties)
+            : loop(loop)
+            , properties(properties)
+        {
+            packet_registry = proto_47::make_packet_registry();
+        }
+
+        void start();
+    };
+}

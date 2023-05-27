@@ -14,11 +14,11 @@ void handle_listen(const uvw::listen_event &, uvw::tcp_handle &server_tcp_handle
     // create tcp handle resource for incoming connection
     std::shared_ptr<uvw::tcp_handle> client_tcp_handle = server_tcp_handle.parent().resource<uvw::tcp_handle>();
 
-    Connection connection(client_tcp_handle);
+    network::Connection connection(client_tcp_handle);
 
     // register handlers
-    client_tcp_handle->on<uvw::end_event>(handle_end);
-    client_tcp_handle->on<uvw::data_event>(handle_data);
+    client_tcp_handle->on<uvw::end_event>(network::handle_end);
+    client_tcp_handle->on<uvw::data_event>(network::handle_data);
 
     spdlog::debug("Registered handlers");
 
@@ -26,7 +26,7 @@ void handle_listen(const uvw::listen_event &, uvw::tcp_handle &server_tcp_handle
     server_tcp_handle.accept(*client_tcp_handle);
 
     // dependency injection -- inject Connection into the tcp_handle of the connection
-    client_tcp_handle->data(std::make_shared<Connection>(connection));
+    client_tcp_handle->data(std::make_shared<network::Connection>(connection));
 
     client_tcp_handle->read();
 
@@ -34,7 +34,7 @@ void handle_listen(const uvw::listen_event &, uvw::tcp_handle &server_tcp_handle
     spdlog::info("Accepted connection from {}:{}", sock.ip, sock.port);
 }
 
-void Server::start()
+void network::Server::start()
 {
     // create tcp handle resource
     this->tcp_handle = this->loop->resource<uvw::tcp_handle>();

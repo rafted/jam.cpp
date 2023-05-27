@@ -28,13 +28,13 @@ int main()
     // create uv loop
     auto loop = uvw::loop::get_default();
 
-    Properties properties = {
+    network::Properties properties = {
         .host = "0.0.0.0",
         .port = 25565,
         .protocol = 47
     };
 
-    Server server(loop, properties);
+    network::Server server(loop, properties);
     server.start();
 
     // run event

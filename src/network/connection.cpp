@@ -4,16 +4,16 @@
 #include <unordered_map>
 #include <uvw/tcp.h>
 
-void handle_end(const uvw::end_event &, uvw::tcp_handle &client_handle)
+void network::handle_end(const uvw::end_event &, uvw::tcp_handle &client_handle)
 {
-    std::shared_ptr<Connection> connection = client_handle.data<Connection>();
+    std::shared_ptr<network::Connection> connection = client_handle.data<network::Connection>();
 
     spdlog::info("Closed connection from {}:{}", client_handle.sock().ip, client_handle.sock().port);
 }
 
-void handle_data(const uvw::data_event &event, uvw::tcp_handle &client_handle)
+void network::handle_data(const uvw::data_event &event, uvw::tcp_handle &client_handle)
 {
-    std::shared_ptr<Connection> connection = client_handle.data<Connection>();
+    std::shared_ptr<network::Connection> connection = client_handle.data<network::Connection>();
 
     spdlog::debug("Received Data");
 
@@ -27,14 +27,14 @@ void handle_data(const uvw::data_event &event, uvw::tcp_handle &client_handle)
 
     {
         // read packet container
-        auto container = PacketContainer::read_packet(connection->buffer);
+        auto container = network::PacketContainer::read_packet(connection->buffer);
 
         auto state = static_cast<int>(connection->state);
         spdlog::debug("Packet Received (Connection State: {}, Packet Length: {}, Packet ID: {})", state, container.length, container.id);
 
         // get encoder & decoder
-        auto server = client_handle.parent().data<Server>();
-        auto entry = server->packet_registry.get(connection->state, packet::Direction::Serverbound, container.id);
+        auto server = client_handle.parent().data<network::Server>();
+        auto entry = server->packet_registry.get(connection->state, network::packet::Direction::Serverbound, container.id);
 
         // decode packet by its type
         const void *packet = nullptr;
