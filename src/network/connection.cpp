@@ -17,11 +17,13 @@ void handle_data(const uvw::data_event &event, uvw::tcp_handle &client_handle)
 
     spdlog::debug("Received Data");
 
-    // insert the data into the connection's buffer
-    const std::unique_ptr<char[]> &data_ptr = event.data;
+    {
+        // insert the data into the connection's buffer
+        const std::unique_ptr<char[]> &data_ptr = event.data;
 
-    std::vector<char> temp(data_ptr.get(), data_ptr.get() + event.length);
-    connection->buffer.insert(connection->buffer.end(), temp.begin(), temp.end());
+        std::vector<char> temp(data_ptr.get(), data_ptr.get() + event.length);
+        connection->buffer.insert(connection->buffer.end(), temp.begin(), temp.end());
+    }
 
     {
         // read packet container
