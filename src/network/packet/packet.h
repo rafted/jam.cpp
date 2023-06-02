@@ -20,8 +20,8 @@ namespace network::packet
 
     class Packet
     {
-        virtual PacketContainer encode() { }
-        virtual void decode(PacketContainer container) { }
+        virtual PacketContainer encode() = 0;
+        virtual void decode(PacketContainer container) = 0;
 
     public:
         static PacketContainer encode_wrapper(Packet &packet)
@@ -45,8 +45,4 @@ namespace network::packet
             return static_cast<Packet *>(newPacket);
         }
     };
-
-    using EncodeFn = PacketContainer (*)(Packet &);
-    using DecodeFn = PacketContainer (*)(Packet &, PacketContainer);
-    using ConstructorFn = Packet *(*) ();
 }

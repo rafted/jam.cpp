@@ -8,6 +8,10 @@ namespace network::packet::registry
 {
     using PacketID = unsigned long;
 
+    using EncodeFn = PacketContainer (*)(void *);
+    using DecodeFn = PacketContainer (*)(void *, PacketContainer);
+    using ConstructorFn = Packet *(*) ();
+
     struct PacketRegistryEntry
     {
         EncodeFn encode;

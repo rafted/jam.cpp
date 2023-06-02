@@ -27,23 +27,22 @@ void network::handle_data(const uvw::data_event &event, uvw::tcp_handle &client_
         connection->buffer.insert(connection->buffer.end(), temp.begin(), temp.end());
     }
 
-    {
-        // read packet container
-        auto container = PacketContainer::read_packet(connection->buffer);
+    // read packet container
+    auto container = PacketContainer::read_packet(connection->buffer);
 
-        auto state = static_cast<int>(connection->state);
-        spdlog::debug("Packet Received (Connection State: {}, Packet Length: {}, Packet ID: {})", state, container.length, container.id);
+    auto state = static_cast<int>(connection->state);
+    spdlog::debug("Packet Received (Connection State: {}, Packet Length: {}, Packet ID: {})", state, container.length, container.id);
 
-        // get encoder & decoder
-        auto server = client_handle.parent().data<Server>();
-        auto entry = server->packet_registry.get(connection->state, Direction::Serverbound, container.id);
+    // get encoder & decoder
+    auto server = client_handle.parent().data<Server>();
+    auto entry = server->packet_registry.get(connection->state, Direction::Serverbound, container.id);
 
-        // decode packet by its type
-        const void *packet = nullptr;
+    // decode packet by its type
+    void *packet = nullptr;
 
-        packet = reinterpret_cast<const void *>(entry.constructor());
-        // TODO: decode using entry.decode
+    packet = reinterpret_cast<void *>(entry.constructor());
 
-        spdlog::debug("packet type: {}", typeid(packet).name());
-    }
+    (*entry.decode)(packet, container);
+
+    spdlog::debug("packet type: {}", typeid(packet).name());
 }
