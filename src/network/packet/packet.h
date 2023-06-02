@@ -24,14 +24,16 @@ namespace network::packet
         virtual void decode(PacketContainer container) = 0;
 
     public:
-        static PacketContainer encode_wrapper(Packet &packet)
+        static PacketContainer encode_wrapper(void *packet)
         {
-            return packet.encode();
+            Packet *p = static_cast<Packet *>(packet);
+            return p->encode();
         }
 
-        static PacketContainer decode_wrapper(Packet &packet, PacketContainer container)
+        static PacketContainer decode_wrapper(void *packet, PacketContainer container)
         {
-            packet.decode(container);
+            Packet *p = static_cast<Packet *>(packet);
+            p->decode(container);
             return container;
         }
 
