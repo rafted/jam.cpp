@@ -1,5 +1,6 @@
 #include "network/connection.h"
 #include "network/packet/container.h"
+#include "network/packet/packet.h"
 #include "network/server.h"
 #include "spdlog/spdlog.h"
 
@@ -31,18 +32,19 @@ void network::handle_data(const uvw::data_event &event, uvw::tcp_handle &client_
     auto container = PacketContainer::read_packet(connection->buffer);
 
     auto state = static_cast<int>(connection->state);
-    spdlog::debug("Packet Received (Connection State: {}, Packet Length: {}, Packet ID: {})", state, container.length, container.id);
 
-    // get encoder & decoder
     auto server = client_handle.parent().data<Server>();
-    auto entry = server->packet_registry.get(connection->state, Direction::Serverbound, container.id);
 
-    // decode packet by its type
-    void *packet = nullptr;
+    Packet *packet = server->packet_registry.get(connection->state, Serverbound, container.id)();
+    packet->decode(container);
 
-    packet = reinterpret_cast<void *>(entry.constructor());
+    const std::type_info &packet_type = typeid(*packet);
 
-    (*entry.decode)(packet, container);
+    spdlog::debug("Packet Received (Connection State: {}, Packet Length: {}, Packet ID: {}, Packet Type: {})",
+        state,
+        container.length,
+        container.id,
+        packet_type.name());
 
-    spdlog::debug("packet type: {}", typeid(packet).name());
+    delete packet;
 }

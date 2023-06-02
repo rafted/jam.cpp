@@ -96,8 +96,7 @@ namespace proto_47
             network::Handshake,
             network::packet::Direction::Serverbound,
             0,
-            &network::packet::Packet::encode_wrapper,
-            &network::packet::Packet::decode_wrapper);
+            network::packet::registry::PacketRegistry::make_constructor<handshaking::serverbound::HandshakePacket>());
 
         return registry;
     }

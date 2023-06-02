@@ -7,23 +7,12 @@
 namespace network::packet::registry
 {
     using PacketID = unsigned long;
-
-    using EncodeFn = PacketContainer (*)(void *);
-    using DecodeFn = PacketContainer (*)(void *, PacketContainer);
-    using ConstructorFn = Packet *(*) ();
-
-    struct PacketRegistryEntry
-    {
-        EncodeFn encode;
-        DecodeFn decode;
-
-        ConstructorFn constructor;
-    };
+    using Constructor = std::function<Packet *()>;
 
     class PacketRegistry
     {
     private:
-        std::map<PacketID, PacketRegistryEntry> packets;
+        std::unordered_map<PacketID, Constructor> packets;
 
     public:
         PacketRegistry() { }
@@ -34,20 +23,20 @@ namespace network::packet::registry
         }
 
         template<typename T>
-        void emplace(ConnectionState state, Direction direction, int id, EncodeFn encode, DecodeFn decode)
+        void emplace(ConnectionState state, Direction direction, int id, Constructor constructor)
         {
             static_assert(std::is_base_of_v<Packet, T>, "T must derive from Packet");
 
-            ConstructorFn constructor = []() -> Packet *
-            {
-                return Packet::constructor_wrapper<T>();
-            };
-
-            auto pair = std::pair(get_packet_id(state, direction, id), PacketRegistryEntry { .encode = encode, .decode = decode, .constructor = constructor });
-
-            packets.insert(pair);
+            packets.insert(std::pair(get_packet_id(state, direction, id), constructor));
         }
 
-        PacketRegistryEntry get(ConnectionState state, Direction direction, int id);
+        Constructor get(ConnectionState state, Direction direction, int id);
+
+        template<typename T>
+        static Constructor make_constructor()
+        {
+            return []()
+            { return new T(); };
+        }
     };
 }
