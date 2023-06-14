@@ -7,6 +7,11 @@
 using namespace network;
 using namespace network::packet;
 
+void network::handle_packet(std::shared_ptr<Connection> connection, PacketContainer container)
+{
+    spdlog::debug("yes");
+}
+
 void network::handle_end(const uvw::end_event &, uvw::tcp_handle &client_handle)
 {
     std::shared_ptr<Connection> connection = client_handle.data<Connection>();
@@ -45,6 +50,8 @@ void network::handle_data(const uvw::data_event &event, uvw::tcp_handle &client_
         container.length,
         container.id,
         packet_type.name());
+
+    handle_packet(connection, container);
 
     // delete packet;
 }
