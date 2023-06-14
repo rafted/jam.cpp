@@ -30,7 +30,7 @@ namespace network::packet::registry
             packets.insert(std::pair(get_packet_id(state, direction, id), constructor));
         }
 
-        Constructor get(ConnectionState state, Direction direction, int id);
+        std::optional<Constructor> get(ConnectionState state, Direction direction, int id);
 
         template<typename T>
         static Constructor make_constructor()

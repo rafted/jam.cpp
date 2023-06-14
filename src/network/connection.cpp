@@ -21,6 +21,8 @@ void network::handle_end(const uvw::end_event &, uvw::tcp_handle &client_handle)
 
 void network::handle_data(const uvw::data_event &event, uvw::tcp_handle &client_handle)
 {
+    auto server = client_handle.parent().data<Server>();
+
     std::shared_ptr<Connection> connection = client_handle.data<Connection>();
 
     spdlog::debug("Received Data");
@@ -38,9 +40,16 @@ void network::handle_data(const uvw::data_event &event, uvw::tcp_handle &client_
 
     auto state = static_cast<int>(connection->state);
 
-    auto server = client_handle.parent().data<Server>();
+    auto pkt_constructor = server->packet_registry.get(connection->state, Serverbound, container.id);
 
-    Packet *packet = server->packet_registry.get(connection->state, Serverbound, container.id)();
+    if (!pkt_constructor.has_value())
+    {
+        spdlog::debug("incorrect packet received (Packet ID: {})", container.id);
+        return;
+    }
+
+    Packet *packet = pkt_constructor.value()();
+
     packet->decode(container);
 
     const std::type_info &packet_type = typeid(*packet);
