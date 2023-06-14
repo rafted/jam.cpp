@@ -46,5 +46,5 @@ void network::handle_data(const uvw::data_event &event, uvw::tcp_handle &client_
         container.id,
         packet_type.name());
 
-    delete packet;
+    // delete packet;
 }

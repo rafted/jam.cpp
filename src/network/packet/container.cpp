@@ -12,10 +12,11 @@ namespace network::packet
         std::vector<char> pkt_data(data.begin(), data.begin() + pkt_len);
 
         // construct PacketContainer
-        PacketContainer container = {};
-        container.length = pkt_len;
-        container.id = pkt_id;
-        container.data = pkt_data;
+        PacketContainer container = {
+            .length = pkt_len,
+            .id = pkt_id,
+            .data = pkt_data
+        };
 
         return container;
     }
