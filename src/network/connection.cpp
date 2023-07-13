@@ -24,10 +24,13 @@ void network::handle_packet(std::shared_ptr<Connection> connection, PacketContai
             {
             case 1:
                 connection->state = ConnectionState::Status;
+                break;
             case 2:
                 connection->state = ConnectionState::Play;
+                break;
             default:
                 spdlog::debug("invalid next_state value: {}", pkt->next_state);
+                break;
             }
         }
     case Status:
