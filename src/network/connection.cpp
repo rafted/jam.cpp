@@ -1,15 +1,43 @@
 #include "network/connection.h"
 #include "network/packet/container.h"
 #include "network/packet/packet.h"
+#include "network/protocol/implementations/proto_47.h"
 #include "network/server.h"
 #include "spdlog/spdlog.h"
 
 using namespace network;
 using namespace network::packet;
 
-void network::handle_packet(std::shared_ptr<Connection> connection, PacketContainer container)
+void network::handle_packet(std::shared_ptr<Connection> connection, PacketContainer container, Packet *packet)
 {
-    spdlog::debug("yes");
+
+    switch (connection->state)
+    {
+    case Handshake:
+        switch (container.id)
+        {
+        case 0:
+            proto_47::handshaking::serverbound::HandshakePacket *pkt = static_cast<proto_47::handshaking::serverbound::HandshakePacket *>(packet);
+
+            if (connection->state == 1)
+            {
+                connection->state = ConnectionState::Status;
+            }
+            else if (connection->state == 2)
+            {
+                connection->state = ConnectionState::Play;
+            }
+            else
+            {
+                // what the fuck
+            }
+        }
+    case Status:
+    case Login:
+    case Play:
+    case Closed:
+        break;
+    }
 }
 
 void network::handle_end(const uvw::end_event &, uvw::tcp_handle &client_handle)
@@ -54,13 +82,14 @@ void network::handle_data(const uvw::data_event &event, uvw::tcp_handle &client_
 
     const std::type_info &packet_type = typeid(*packet);
 
-    spdlog::debug("Packet Received (Connection State: {}, Packet Length: {}, Packet ID: {}, Packet Type: {})",
+    spdlog::debug("Packet Received (Connection State: {}, Data Length: {}, Packet Length: {}, Packet ID: {}, Packet Type: {})",
         state,
+        connection->buffer.size(),
         container.length,
         container.id,
         packet_type.name());
 
-    handle_packet(connection, container);
+    handle_packet(connection, container, packet);
 
     // delete packet;
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "network/packet/container.h"
+#include "network/packet/packet.h"
 #include <memory>
 #include <uvw.hpp>
 #include <uvw/tcp.h>
@@ -33,7 +34,7 @@ namespace network
         }
     };
 
-    void handle_packet(std::shared_ptr<Connection> connection, PacketContainer container);
+    void handle_packet(std::shared_ptr<Connection> connection, PacketContainer container, Packet *packet);
 
     void handle_end(const uvw::end_event &event, uvw::tcp_handle &client);
     void handle_data(const uvw::data_event &event, uvw::tcp_handle &);
