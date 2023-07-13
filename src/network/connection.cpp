@@ -19,17 +19,15 @@ void network::handle_packet(std::shared_ptr<Connection> connection, PacketContai
         case 0:
             proto_47::handshaking::serverbound::HandshakePacket *pkt = static_cast<proto_47::handshaking::serverbound::HandshakePacket *>(packet);
 
-            if (pkt->next_state == 1)
+            // switch connection->state
+            switch (pkt->next_state)
             {
+            case 1:
                 connection->state = ConnectionState::Status;
-            }
-            else if (pkt->next_state == 2)
-            {
+            case 2:
                 connection->state = ConnectionState::Play;
-            }
-            else
-            {
-                // what the fuck
+            default:
+                spdlog::debug("invalid next_state value: {}", pkt->next_state);
             }
         }
     case Status:
