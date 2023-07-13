@@ -8,6 +8,8 @@
 using namespace network;
 using namespace network::packet;
 
+using namespace proto_47::handshaking::serverbound;
+
 void network::handle_packet(std::shared_ptr<Connection> connection, PacketContainer container, Packet *packet)
 {
 
@@ -17,7 +19,7 @@ void network::handle_packet(std::shared_ptr<Connection> connection, PacketContai
         switch (container.id)
         {
         case 0:
-            proto_47::handshaking::serverbound::HandshakePacket *pkt = static_cast<proto_47::handshaking::serverbound::HandshakePacket *>(packet);
+            HandshakePacket *pkt = static_cast<HandshakePacket *>(packet);
 
             // switch connection->state
             switch (pkt->next_state)
