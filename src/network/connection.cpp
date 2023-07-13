@@ -19,11 +19,11 @@ void network::handle_packet(std::shared_ptr<Connection> connection, PacketContai
         case 0:
             proto_47::handshaking::serverbound::HandshakePacket *pkt = static_cast<proto_47::handshaking::serverbound::HandshakePacket *>(packet);
 
-            if (connection->state == 1)
+            if (pkt->next_state == 1)
             {
                 connection->state = ConnectionState::Status;
             }
-            else if (connection->state == 2)
+            else if (pkt->next_state == 2)
             {
                 connection->state = ConnectionState::Play;
             }
