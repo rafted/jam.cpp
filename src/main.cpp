@@ -1,4 +1,8 @@
+#include "flecs.h"
+#include "flecs/addons/cpp/c_types.hpp"
+#include "game/entity.hpp"
 #include "network/server.hpp"
+#include "uvw/timer.h"
 #include <spdlog/spdlog.h>
 #include <uvw.hpp>
 
@@ -10,19 +14,19 @@ int main()
 #endif
 
     spdlog::info("Starting Jam");
-    // const auto world_ptr = std::make_shared<World>(world);
-    //
-    // // create test entity
-    // const auto entity = registry.create();
-    //
+    // initialize ecs
+    flecs::world ecs;
+
     // // add basic components to test entity
     // registry.emplace<EntityType>(entity, EntityType::Player);
     // registry.emplace<Location>(entity, 0, 0, 0, world_ptr);
     // registry.emplace<Alive>(entity, 20, 20);
 
-    // create uv loop
+    // create libuv event loop
     auto loop = uvw::loop::get_default();
+    auto timer = loop->resource<uvw::timer_handle>();
 
+    // initialize the server
     network::Properties properties = {
         .host = "0.0.0.0",
         .port = 25565,
@@ -32,6 +36,11 @@ int main()
     network::Server server(loop, properties);
     server.start();
 
-    // run event
+    // set the ecs up to run inside the event loop-
+    timer->on<uvw::timer_event>([&ecs](const uvw::timer_event &, uvw::timer_handle &)
+        { ecs.progress(); });
+    timer->start(uvw::timer_handle::time(0), uvw::timer_handle::time(50));
+
+    // run event loop
     loop->run();
 }
