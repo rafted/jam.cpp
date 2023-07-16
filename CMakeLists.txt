@@ -31,7 +31,7 @@ target_sources(${PROJECT_NAME} PRIVATE ${SOURCES})
 
 add_subdirectory(thirdparty/spdlog)
 add_subdirectory(thirdparty/uvw)
-add_subdirectory(thirdparty/entt)
+add_subdirectory(thirdparty/flecs)
 
 target_include_directories(${PROJECT_NAME} PRIVATE
     ${PROJECT_SOURCE_DIR}
@@ -40,7 +40,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
     spdlog
-    EnTT
+    flecs::flecs_static
     uv
     uvw
 )
