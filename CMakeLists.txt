@@ -36,6 +36,7 @@ add_subdirectory(thirdparty/flecs)
 target_include_directories(${PROJECT_NAME} PRIVATE
     ${PROJECT_SOURCE_DIR}
     src
+    includes/
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
