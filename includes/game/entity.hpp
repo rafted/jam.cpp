@@ -7,13 +7,13 @@ namespace game
 {
     namespace entity
     {
-        struct Alive
+        struct Health
         {
             double health;
             double food;
         };
 
-        enum EntityType
+        enum Type
         {
             Player
         };

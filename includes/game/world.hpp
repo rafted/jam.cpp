@@ -7,7 +7,7 @@ namespace game
 {
     namespace world
     {
-        enum WorldType
+        enum Environment
         {
             Normal,
             Nether,
@@ -18,11 +18,11 @@ namespace game
         {
         public:
             std::string name;
-            WorldType type;
+            Environment environment;
 
-            World(const std::string name, WorldType type)
+            World(const std::string name, Environment environment)
                 : name { name }
-                , type { type }
+                , environment { environment }
             {
             }
         };
