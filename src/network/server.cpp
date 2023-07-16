@@ -1,5 +1,5 @@
-#include "network/server.h"
-#include "network/connection.h"
+#include "network/server.hpp"
+#include "network/connection.hpp"
 #include "spdlog/spdlog.h"
 
 using namespace network;

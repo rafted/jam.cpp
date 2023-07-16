@@ -1,7 +1,7 @@
 #pragma once
 
-#include "network/packet/container.h"
-#include "network/packet/packet.h"
+#include "network/packet/container.hpp"
+#include "network/packet/packet.hpp"
 #include <memory>
 #include <uvw.hpp>
 #include <uvw/tcp.h>
@@ -30,6 +30,10 @@ namespace network
         Connection(std::shared_ptr<uvw::tcp_handle> tcp_handle)
             : tcp_handle(tcp_handle)
             , state(ConnectionState::Handshake)
+        {
+        }
+
+        ~Connection()
         {
         }
     };

@@ -1,5 +1,5 @@
-#include "network/packet/container.h"
-#include "network/protocol/encoding/varnums.h"
+#include "network/packet/container.hpp"
+#include "network/protocol/encoding/varnums.hpp"
 
 using namespace network::protocol::encoding;
 

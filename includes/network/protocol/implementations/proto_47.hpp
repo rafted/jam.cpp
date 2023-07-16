@@ -1,10 +1,10 @@
 #pragma once
 
-#include "network/packet/container.h"
-#include "network/packet/packet.h"
-#include "network/packet/registry.h"
-#include "network/protocol/encoding/numbers.h"
-#include "network/protocol/encoding/string.h"
+#include "network/packet/container.hpp"
+#include "network/packet/packet.hpp"
+#include "network/packet/registry.hpp"
+#include "network/protocol/encoding/numbers.hpp"
+#include "network/protocol/encoding/string.hpp"
 #include <string>
 
 using namespace network::protocol::encoding;

@@ -1,4 +1,4 @@
-#include "network/packet/registry.h"
+#include "network/packet/registry.hpp"
 #include <optional>
 
 namespace network::packet::registry

@@ -1,8 +1,8 @@
 #pragma once
 
-#include "network/protocol/implementations/proto_47.h"
+#include "network/protocol/implementations/proto_47.hpp"
 #include <memory>
-#include <network/packet/registry.h>
+#include <network/packet/registry.hpp>
 #include <string>
 #include <uvw.hpp>
 #include <uvw/loop.h>

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "world.h"
+#include "world.hpp"
 #include <memory>
 
 namespace game

@@ -1,8 +1,8 @@
-#include "network/connection.h"
-#include "network/packet/container.h"
-#include "network/packet/packet.h"
-#include "network/protocol/implementations/proto_47.h"
-#include "network/server.h"
+#include "network/connection.hpp"
+#include "network/packet/container.hpp"
+#include "network/packet/packet.hpp"
+#include "network/protocol/implementations/proto_47.hpp"
+#include "network/server.hpp"
 #include "spdlog/spdlog.h"
 
 using namespace network;
@@ -12,16 +12,15 @@ using namespace proto_47::handshaking::serverbound;
 
 void network::handle_packet(std::shared_ptr<Connection> connection, PacketContainer container, Packet *packet)
 {
-
     switch (connection->state)
     {
     case Handshake:
         switch (container.id)
         {
         case 0:
-            HandshakePacket *pkt = static_cast<HandshakePacket *>(packet);
+            auto pkt = dynamic_cast<HandshakePacket *>(packet);
 
-            // switch connection->state
+            // change connection's state
             switch (pkt->next_state)
             {
             case 1:
@@ -55,8 +54,6 @@ void network::handle_data(const uvw::data_event &event, uvw::tcp_handle &client_
     auto server = client_handle.parent().data<Server>();
 
     std::shared_ptr<Connection> connection = client_handle.data<Connection>();
-
-    spdlog::debug("Received Data");
 
     {
         // insert the data into the connection's buffer

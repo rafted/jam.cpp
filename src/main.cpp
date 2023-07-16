@@ -1,4 +1,4 @@
-#include "network/server.h"
+#include "network/server.hpp"
 #include <spdlog/spdlog.h>
 #include <uvw.hpp>
 
@@ -10,11 +10,6 @@ int main()
 #endif
 
     spdlog::info("Starting Jam");
-
-    // entt::registry registry;
-    //
-    // // create test world
-    // const auto world = World("default", WorldType::Normal);
     // const auto world_ptr = std::make_shared<World>(world);
     //
     // // create test entity

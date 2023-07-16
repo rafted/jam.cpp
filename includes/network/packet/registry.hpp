@@ -1,7 +1,7 @@
 #pragma once
 
-#include "network/connection.h"
-#include "network/packet/packet.h"
+#include "network/connection.hpp"
+#include "network/packet/packet.hpp"
 #include <map>
 
 namespace network::packet::registry

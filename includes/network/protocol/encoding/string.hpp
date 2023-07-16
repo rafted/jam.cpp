@@ -1,6 +1,6 @@
 #pragma once
 
-#include "network/protocol/encoding/varnums.h"
+#include "network/protocol/encoding/varnums.hpp"
 #include <array>
 #include <cstdint>
 #include <cstring>
