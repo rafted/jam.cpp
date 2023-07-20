@@ -6,6 +6,12 @@
 #include <spdlog/spdlog.h>
 #include <uvw.hpp>
 
+void tick(const uvw::timer_event &, uvw::timer_handle &handle)
+{
+    auto world = handle.parent().data<flecs::world>();
+    world->progress();
+}
+
 int main()
 {
 #ifdef NDEBUG
@@ -37,8 +43,13 @@ int main()
     server.start();
 
     // set the ecs up to run inside the event loop-
-    timer->on<uvw::timer_event>([&ecs](const uvw::timer_event &, uvw::timer_handle &)
-        { ecs.progress(); });
+    // timer->on<uvw::timer_event>((const uvw::timer_event &a, uvw::timer_handle &handle) {
+    //     auto world = handle.parent().data<flecs::world>();
+    //     world->progress();
+    // });
+
+    timer->on<uvw::timer_event>(tick);
+
     timer->start(uvw::timer_handle::time(0), uvw::timer_handle::time(50));
 
     // run event loop
