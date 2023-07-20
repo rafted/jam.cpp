@@ -42,14 +42,8 @@ int main()
     network::Server server(loop, properties);
     server.start();
 
-    // set the ecs up to run inside the event loop-
-    // timer->on<uvw::timer_event>((const uvw::timer_event &a, uvw::timer_handle &handle) {
-    //     auto world = handle.parent().data<flecs::world>();
-    //     world->progress();
-    // });
-
+    // set up timer to run tick loop
     timer->on<uvw::timer_event>(tick);
-
     timer->start(uvw::timer_handle::time(0), uvw::timer_handle::time(50));
 
     // run event loop
